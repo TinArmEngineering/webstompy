@@ -28,8 +28,7 @@ class StompReceiver(threading.Thread):
     """
 
     def __init__(self, transporter, queue_frames, queue_listener):
-        """StompReceiver constructor
-        """
+        """StompReceiver constructor"""
         self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         threading.Thread.__init__(self)
         self._transporter = transporter
@@ -71,8 +70,7 @@ class StompReceiver(threading.Thread):
                 except Exception:
                     # TODO: Give some error here: logging, put garbage into queue
                     self.logger.error(
-                        f"Receiver daemon received non-STOMP frame: "
-                        f'"{frame_bytes}"'
+                        f"Receiver daemon received non-STOMP frame: " f'"{frame_bytes}"'
                     )
                     raise
                 if frame is not None:

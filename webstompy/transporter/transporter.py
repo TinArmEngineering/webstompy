@@ -13,25 +13,21 @@ OPCODE_DATA = (websocket.ABNF.OPCODE_TEXT, websocket.ABNF.OPCODE_BINARY)
 
 
 class BaseTransporter(ABC):
-    """Abstract transporter class to adapt to various connection types
-    """
+    """Abstract transporter class to adapt to various connection types"""
 
     @abstractmethod
     def receive(self):
-        """Receive a message from the transporter connection (blocking)
-        """
+        """Receive a message from the transporter connection (blocking)"""
         pass
 
     @abstractmethod
     def send(self, frame):
-        """Send a message to the transporter connection
-        """
+        """Send a message to the transporter connection"""
         pass
 
     @abstractmethod
     def alive(self):
-        """Check transporter connection status
-        """
+        """Check transporter connection status"""
         pass
 
 
@@ -51,8 +47,7 @@ class WebSocketPinger(threading.Thread):
 
 
 class WebSocketTransporter(BaseTransporter):
-    """webstompty transporter class through WebSockets
-    """
+    """webstompty transporter class through WebSockets"""
 
     def __init__(self, socket):
         # TODO: Check if socket is valid, throw up if not
@@ -63,8 +58,7 @@ class WebSocketTransporter(BaseTransporter):
         self._pinger.start()
 
     def receive(self):
-        """Receive a message from the transporter connection (blocking)
-        """
+        """Receive a message from the transporter connection (blocking)"""
         try:
             frame = self.socket.recv_frame()
         except WebSocketConnectionClosedException:
@@ -92,12 +86,10 @@ class WebSocketTransporter(BaseTransporter):
             return frame.data
 
     def send(self, frame):
-        """Send a message to the transporter connection
-        """
+        """Send a message to the transporter connection"""
         self.socket.send(frame)
 
     @property
     def alive(self):
-        """Check transporter connection status
-        """
+        """Check transporter connection status"""
         return self._alive

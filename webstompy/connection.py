@@ -24,8 +24,7 @@ class StompConnection(object):
     """
 
     def __init__(self, connector=None, transporter=WebSocketTransporter):
-        """StompConnection constructor
-        """
+        """StompConnection constructor"""
         self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         # TODO: Add logging
         # TODO: Check if transporter is valid, throw up if not
@@ -39,8 +38,7 @@ class StompConnection(object):
             queue_listener=self._queue_listener,
         )
         self.logger.info(
-            "New webstompy connection initializing. "
-            "Starting receiver daemon."
+            "New webstompy connection initializing. " "Starting receiver daemon."
         )
         self._receiver.daemon = True
         self._receiver.start()
@@ -67,8 +65,7 @@ class StompConnection(object):
             Listener to be derived from `webstompy.StompListener`.
         """
         self.logger.info(
-            f"Adding listener {listener.__class__.__name__} to "
-            "StompConnection."
+            f"Adding listener {listener.__class__.__name__} to " "StompConnection."
         )
         self._queue_listener.put(listener)
 

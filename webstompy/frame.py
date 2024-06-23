@@ -30,8 +30,7 @@ class StompFrame(object):
             self._command = None
         if header is not None:
             self._header = [
-                (entry[0].encode("UTF-8"), entry[1].encode("UTF-8"))
-                for entry in header
+                (entry[0].encode("UTF-8"), entry[1].encode("UTF-8")) for entry in header
             ]
         else:
             self._header = None
@@ -43,8 +42,7 @@ class StompFrame(object):
             lines = payload.splitlines()
             self._command = lines[0]
             self._header = [
-                tuple(entry.split(b":"))
-                for entry in lines[1 : lines.index(b"")]
+                tuple(entry.split(b":")) for entry in lines[1 : lines.index(b"")]
             ]
             self._message = b"\n".join(lines[lines.index(b"") + 1 :])[:-1]
 
@@ -62,32 +60,27 @@ class StompFrame(object):
 
     @property
     def command(self):
-        """The command of this STOMP frame.
-        """
+        """The command of this STOMP frame."""
         return self._command
 
     @property
     def header(self):
-        """The headers of this STOMP frame as list of key, value tuples
-        """
+        """The headers of this STOMP frame as list of key, value tuples"""
         return self._header
 
     @property
     def message(self):
-        """The message of this STOMP frame.
-        """
+        """The message of this STOMP frame."""
         return self._message
 
     @property
     def json(self):
-        """The message of this STOMP frame as JSON data
-        """
+        """The message of this STOMP frame as JSON data"""
         return json.loads(self.message)
 
     @property
     def payload(self):
-        """The complete byte payload of this STOMP frame.
-        """
+        """The complete byte payload of this STOMP frame."""
         payload = [
             self._command,
             b"\n".join([entry[0] + b":" + entry[1] for entry in self._header]),
